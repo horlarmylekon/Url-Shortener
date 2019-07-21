@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Random;
 
 @Controller
-public class UrlShortnerController {
+public class ShortenURLController {
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String urlShortnerView() {
         return "index";
     }
+
 
 
 }
