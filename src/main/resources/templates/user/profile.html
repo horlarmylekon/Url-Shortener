@@ -34,35 +34,24 @@
 </head>
 <body class="text-center">
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
     <header class="masthead mb-auto">
         <div class="inner">
             <h3 class="masthead-brand">url.io</h3>
             <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="index.html">Home</a>
+                <a class="nav-link " th:href="@{/}">Home</a>
                 <a class="nav-link" th:href="@{/user/login}">Login</a>
                 <a class="nav-link" th:href="@{/user/register}">Register</a>
-                <a class="nav-link"  th:href="@{/developer}">Developer</a>
+                <a class="nav-link "  th:href="@{/developer}">Developer</a>
+                <a class="nav-link active" href="#">Profile </a>
             </nav>
         </div>
     </header>
 
     <main role="main" class="inner cover">
-        <h1 class="cover-heading">URL Shortner</h1>
-        <p class="lead">URL shortener app is a simple tool that takes a long URL and turns it into a fancy and short URL you would
-            like it to be.</p>
-        <!--<p class="lead">-->
-            <!--<input placeholder="www.example.com" required="required">-->
-            <!--<a href="#" class="btn btn-lg btn-secondary">Learn more</a>-->
-        <!--</p>-->
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" id="urlInput" name="urlInput" maxlength="225" placeholder="https://www.example.com" aria-label="url" aria-describedby="button-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Get Short URL</button>
-            </div>
-        </div>
-        <div class="input-group ">
-            <textarea style="width: 100%;height: 200px" id="shortUrl" placeholder="...shorten url appears here" readonly="readonly"></textarea>
-        </div>
+        <h1 class="cover-heading">Dashboard</h1>
+        <p>coming soon!</p>
+
 
 
     </main>

@@ -1,14 +1,31 @@
 package com.intellisensedev.urlshortener_engine.model;
 
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
+@Table(name = "ShortenURL")
 public class ShortenURL {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+
+    @NotNull
+    @Column(name = "long_url")
     private String long_url;
+
+    @NotNull
+    @Column(name = "short_url")
     private String short_url;
+
+    @Column(name = "expirationTime")
     private Date expirationTime;
+
+    //tie userid
     private Long userID;
 
     public Long getId() {

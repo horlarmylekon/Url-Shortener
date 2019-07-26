@@ -1,5 +1,6 @@
 package com.intellisensedev.urlshortener_engine.service;
 
+import com.intellisensedev.urlshortener_engine.dto.UserDto;
 import com.intellisensedev.urlshortener_engine.model.User;
 
 import java.util.Date;
@@ -7,7 +8,6 @@ import java.util.Timer;
 
 public interface ShortenURLService {
 
-    User createNewUser(User user);
     /**
      *
      * @param longUrl
