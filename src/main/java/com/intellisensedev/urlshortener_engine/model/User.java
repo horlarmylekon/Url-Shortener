@@ -1,6 +1,8 @@
 package com.intellisensedev.urlshortener_engine.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -11,23 +13,28 @@ public class User {
     @Column(name = "id")
     private Long userID;
 
+    @NotNull
     @Column(name = "name")
     private String name;
 
+    @NotNull
     @Column(name = "email", unique = true)
     private String email;
 
+    @NotNull
     @Column(name = "username")
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
+    @NotNull
     @Column(name = "confirmPassword")
     private String confirmPassword;
 
-    @Column(name = "userType")
-    private UserType userType;
+    @Column(name = "roles")
+    private Set roles;
 
     @Column(name = "contact")
     private String contact;
@@ -75,6 +82,7 @@ public class User {
         this.password = password;
     }
 
+    @Transient
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -83,12 +91,16 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public UserType getUserType() {
-        return userType;
+    @ManyToMany
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    public Set getRoles() {
+        return roles;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setRoles(Set roles) {
+        this.roles = roles;
     }
 
     public String getContact() {
@@ -116,7 +128,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
-                ", userType=" + userType +
+                ", roles=" + roles +
                 ", contact='" + contact + '\'' +
                 ", numberOfUrl=" + numberOfUrl +
                 '}';

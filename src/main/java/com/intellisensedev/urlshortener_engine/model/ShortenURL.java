@@ -22,6 +22,7 @@ public class ShortenURL {
     @Column(name = "short_url")
     private String short_url;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "expirationTime")
     private Date expirationTime;
 

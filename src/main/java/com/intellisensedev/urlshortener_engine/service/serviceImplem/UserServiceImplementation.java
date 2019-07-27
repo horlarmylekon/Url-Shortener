@@ -26,19 +26,16 @@ public class UserServiceImplementation implements UserService {
 
 
     @Override
-    public String createNewUser(UserDto userDto) {
+    public String createNewUserAccount(UserDto userDto) {
         //check if the same user with same is not present
         Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
         if(optionalUser.isPresent()){
             logger.info("User with same email already exists");
-            return "User Exists";
+            return "user already exist";
             //return MessageSource.getMessage('user.exists')
         }
-        System.out.println(userDto.getName());
-        System.out.println(userDto.getUsername());
-        System.out.println(userDto.getEmail());
-        System.out.println(userDto.getPassword());
-        System.out.println(userDto.getConfirmPassword());
+
+        logger.info("GOT HERE");
         //now am mapping my UserDto to model
         User user = modelMapper.map(userDto, User.class);
 
@@ -52,6 +49,25 @@ public class UserServiceImplementation implements UserService {
             logger.log(Level.SEVERE, "On creating user", ex);
             return "Error creating user";
             //return MessageSource.getMessage('user.create.error')
+        }
+    }
+
+    @Override
+    public String deleteUserAccount(Long id) {
+
+        User user = userRepository.findUserByUserID(id);
+
+        logger.info("Attempting to delete user: ");
+        try{
+            //delete user account
+            userRepository.delete(user);
+            logger.info("User with email" + user.getEmail() + " is deleted successfully");
+            return "User deleted successfully";
+            //return MessageSource.getMessage('user.delete.success')
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "On deleting user", e);
+            return "Error deleting user";
+            //return MessageSource.getMessage('user.delete.error')
         }
     }
 }
