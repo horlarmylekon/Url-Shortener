@@ -11,7 +11,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Set users;
+    @ManyToMany(mappedBy = "roles") // indicates the entity is the inverse of the relationship.
+    private Set<User> users;
 
     public Long getId() {
         return id;
@@ -29,12 +30,20 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles")
-    public Set getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
     }
 }

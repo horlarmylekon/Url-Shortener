@@ -10,6 +10,7 @@ public class UserDto {
     private String confirmPassword;
     private String contact;
     private int numberOfUrl;
+    private String role;
 
     public Long getUserID() {
         return userID;
@@ -41,6 +42,14 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getPassword() {

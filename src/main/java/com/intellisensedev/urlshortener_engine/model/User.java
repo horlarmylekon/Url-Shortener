@@ -30,11 +30,13 @@ public class User {
     private String password;
 
     @NotNull
+    @Transient
     @Column(name = "confirmPassword")
     private String confirmPassword;
 
+    @ManyToMany//define many to many relationship among 2 entities
     @Column(name = "roles")
-    private Set roles;
+    private Set<Role> roles;
 
     @Column(name = "contact")
     private String contact;
@@ -82,7 +84,6 @@ public class User {
         this.password = password;
     }
 
-    @Transient
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -91,15 +92,11 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    public Set getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

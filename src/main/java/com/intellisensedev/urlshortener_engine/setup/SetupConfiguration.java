@@ -1,5 +1,6 @@
 package com.intellisensedev.urlshortener_engine.setup;
 
+import com.intellisensedev.urlshortener_engine.model.Role;
 import com.intellisensedev.urlshortener_engine.model.User;
 import com.intellisensedev.urlshortener_engine.model.UserType;
 import com.intellisensedev.urlshortener_engine.repository.UserRepository;
@@ -56,7 +57,7 @@ public class SetupConfiguration implements CommandLineRunner {
             adminUser.setName("superadmin");
             adminUser.setEmail("oyeknamiakandeworld@gmail.com");
             adminUser.setUsername("superadmin");
-            adminUser.setUserType(UserType.ADMIN);
+            //adminUser.setRoles(R);
             adminUser.setPassword("super");
             adminUser.setConfirmPassword("super");
 

@@ -2,13 +2,16 @@ package com.intellisensedev.urlshortener_engine.service.serviceImplem;
 
 import com.intellisensedev.urlshortener_engine.dto.UserDto;
 import com.intellisensedev.urlshortener_engine.model.User;
+import com.intellisensedev.urlshortener_engine.repository.RoleRepository;
 import com.intellisensedev.urlshortener_engine.repository.UserRepository;
 import com.intellisensedev.urlshortener_engine.service.ShortenURLService;
 import com.intellisensedev.urlshortener_engine.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +21,10 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -69,5 +76,18 @@ public class UserServiceImplementation implements UserService {
             return "Error deleting user";
             //return MessageSource.getMessage('user.delete.error')
         }
+    }
+
+    @Override
+    public void save(UserDto user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //user.setRole(new HashSet<>(roleRepository.findAll()));
+        //userRepository.save(user);
+    }
+
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

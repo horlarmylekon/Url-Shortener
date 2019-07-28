@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,26 +43,42 @@ public class LoginController {
         return "user/login";
     }
 
-    @PostMapping(path = "/login")
-    public String userLogin(@RequestParam("email") String email, @RequestParam("password") String password) {
+    @GetMapping("/login")
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
 
-        // validate username and password
-        User user = userRepository.findUserByEmail(email);
-        System.out.println(user.getEmail()+" "+user.getPassword());
-        if(!(user.getEmail()==email) || !(user.getPassword()==password)){
-            logger.info("Invalid user details or not register");
-            return "login failed";
-        }
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
 
-        try{
-            loginService.login(email, password);
-            logger.info("User successfully login");
-            return "redirect:dashboard/profile";
-        }catch (Exception ex){
-            logger.info("",ex);
-        }
-        return "Successfully logged in ..";
+        return "login";
     }
+
+    @GetMapping({"/", "/welcome"})
+    public String welcome(Model model) {
+        return "welcome";
+    }
+
+//    @PostMapping(path = "/login")
+//    public String userLogin(@RequestParam("email") String email, @RequestParam("password") String password) {
+//
+//        // validate username and password
+//        User user = userRepository.findUserByEmail(email);
+//        System.out.println(user.getEmail()+" "+user.getPassword());
+//        if(!(user.getEmail()==email) || !(user.getPassword()==password)){
+//            logger.info("Invalid user details or not register");
+//            return "login failed";
+//        }
+//
+//        try{
+//            loginService.login(email, password);
+//            logger.info("User successfully login");
+//            return "redirect:dashboard/profile";
+//        }catch (Exception ex){
+//            logger.info("",ex);
+//        }
+//        return "Successfully logged in ..";
+//    }
 
 //    @GetMapping(path = "/dashboard")
 //    public String dashboard() {

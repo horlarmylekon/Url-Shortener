@@ -1,6 +1,7 @@
 package com.intellisensedev.urlshortener_engine.service;
 
 import com.intellisensedev.urlshortener_engine.dto.UserDto;
+import com.intellisensedev.urlshortener_engine.model.User;
 
 
 public interface UserService {
@@ -17,4 +18,8 @@ public interface UserService {
      * @return
      */
     String deleteUserAccount(Long id);
+
+    void save(UserDto user);
+
+    User findByUsername(String username);
 }
