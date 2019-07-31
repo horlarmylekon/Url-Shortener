@@ -8,7 +8,6 @@ import com.intellisensedev.urlshortener_engine.service.ShortenURLService;
 import com.intellisensedev.urlshortener_engine.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -23,8 +22,7 @@ public class UserServiceImplementation implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -35,8 +33,9 @@ public class UserServiceImplementation implements UserService {
     @Override
     public String createNewUserAccount(UserDto userDto) {
         //check if the same user with same is not present
-        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
-        if(optionalUser.isPresent()){
+        User user = userRepository.findUserByEmail(userDto.getEmail());
+
+        if(user != null){
             logger.info("User with same email already exists");
             return "user already exist";
             //return MessageSource.getMessage('user.exists')
@@ -44,7 +43,7 @@ public class UserServiceImplementation implements UserService {
 
         logger.info("GOT HERE");
         //now am mapping my UserDto to model
-        User user = modelMapper.map(userDto, User.class);
+        user = modelMapper.map(userDto, User.class);
 
 
         try{
@@ -79,10 +78,10 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void save(UserDto user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        //user.setRole(new HashSet<>(roleRepository.findAll()));
-        //userRepository.save(user);
+    public void save(User user) {
+        user.setPassword(user.getPassword());
+        user.setRoles(new HashSet<>(roleRepository.findAll()));
+        userRepository.save(user);
     }
 
 

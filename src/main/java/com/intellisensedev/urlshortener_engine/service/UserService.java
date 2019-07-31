@@ -19,7 +19,7 @@ public interface UserService {
      */
     String deleteUserAccount(Long id);
 
-    void save(UserDto user);
+    void save(User user);
 
     User findByUsername(String username);
 }

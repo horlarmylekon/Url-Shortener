@@ -2,7 +2,6 @@ package com.intellisensedev.urlshortener_engine.controller;
 
 import com.intellisensedev.urlshortener_engine.dto.UserDto;
 import com.intellisensedev.urlshortener_engine.model.User;
-import com.intellisensedev.urlshortener_engine.securityConfig.SecurityService;
 import com.intellisensedev.urlshortener_engine.service.ShortenURLService;
 import com.intellisensedev.urlshortener_engine.service.UserService;
 import com.intellisensedev.urlshortener_engine.setup.UserValidator;
@@ -19,8 +18,7 @@ import java.util.logging.Logger;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private SecurityService securityService;
+
     @Autowired
     private UserValidator userValidator;
 
@@ -45,10 +43,7 @@ public class UserController {
             //logger.info("Error! {}", bindingResult);
         }
 
-        userService.save(userDto);
-
-        securityService.autoLogin(userDto.getUsername(), userDto.getConfirmPassword());
-
+        //userService.save(userDto);
         return "redirect:/dashboard";
 
     }

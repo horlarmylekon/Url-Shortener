@@ -2,7 +2,6 @@ package com.intellisensedev.urlshortener_engine.setup;
 
 import com.intellisensedev.urlshortener_engine.model.Role;
 import com.intellisensedev.urlshortener_engine.model.User;
-import com.intellisensedev.urlshortener_engine.model.UserType;
 import com.intellisensedev.urlshortener_engine.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SetupConfiguration implements CommandLineRunner {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserRepository userRepository;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Override
     public void run(String... args) throws Exception {
-        //check if the program should create a super admin user
+        //check if the program should create a default
+        //super admin user
         if(shouldCreateDefaultSuperAdmin()){
+            //if not
             createDefaultSuperAdminRoleAndUser();
         }
     }
@@ -30,7 +32,7 @@ public class SetupConfiguration implements CommandLineRunner {
     private boolean shouldCreateDefaultSuperAdmin(){
 
         logger.info("Checking if super admin user should be created");
-
+        // check if a user with username superadmin is present
         boolean superAdminExists = userRepository.existsByUsername("superadmin");
         if(!superAdminExists){
             logger.info("Super admin will be created");
@@ -41,23 +43,23 @@ public class SetupConfiguration implements CommandLineRunner {
     }
 
     @Transactional
-    void createDefaultSuperAdminRoleAndUser(){
+    public void createDefaultSuperAdminRoleAndUser(){
 
-        logger.info("Creating default super admin role and user");
+        logger.info("Creating a default super admin role and user");
 
         try{
-            String user = userRepository.findByUserType(UserType.ADMIN);
+            //User user = userRepository.findUserByRoles("SUPER_ADMIN");
 
-            if(user == null){
-                logger.info("No super admin user found, will try to create one");
-
-            }
+//            if(user == null){
+//                logger.info("No super admin user found, will try to create one");
+//
+//            }
 
             User adminUser = new User();
             adminUser.setName("superadmin");
             adminUser.setEmail("oyeknamiakandeworld@gmail.com");
             adminUser.setUsername("superadmin");
-            //adminUser.setRoles(R);
+            //adminUser.setRoles();
             adminUser.setPassword("super");
             adminUser.setConfirmPassword("super");
 

@@ -5,9 +5,7 @@
  */
 package com.intellisensedev.urlshortener_engine.controller;
 
-import com.intellisensedev.urlshortener_engine.model.User;
 import com.intellisensedev.urlshortener_engine.repository.UserRepository;
-import com.intellisensedev.urlshortener_engine.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +15,28 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author intellisense
+ *
+ * The login controller provide access to authorize
+ * users to login to their dashboard
  */
-@CrossOrigin
+//@CrossOrigin
 @Controller
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+
     @Autowired
     private UserRepository userRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    @GetMapping(path = "/login")
-//    public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password) {
-//
-//        boolean loggedIn = loginService.login(username, password);
-//
-//        return ResponseEntity.ok(loggedIn);
-//
-//    }
-
-    @GetMapping(path = "/user/login")
-    public String login() {
-        return "user/login";
+    @GetMapping({"/", "/home"})
+    public String welcome(Model model) {
+        logger.info("Welcome to url.io home page.");
+        return "index";
     }
 
-    @GetMapping("/login")
+
+    @GetMapping("/user/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
@@ -51,38 +44,15 @@ public class LoginController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
-        return "login";
+        logger.info("Got into Login Page");
+        return "user/login";
     }
 
-    @GetMapping({"/", "/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
+
+    @GetMapping(path = "/user/dashboard")
+    public String dashboard() {
+        logger.info("Got to User Dashboard");
+        return "dashboard/profile";
     }
-
-//    @PostMapping(path = "/login")
-//    public String userLogin(@RequestParam("email") String email, @RequestParam("password") String password) {
-//
-//        // validate username and password
-//        User user = userRepository.findUserByEmail(email);
-//        System.out.println(user.getEmail()+" "+user.getPassword());
-//        if(!(user.getEmail()==email) || !(user.getPassword()==password)){
-//            logger.info("Invalid user details or not register");
-//            return "login failed";
-//        }
-//
-//        try{
-//            loginService.login(email, password);
-//            logger.info("User successfully login");
-//            return "redirect:dashboard/profile";
-//        }catch (Exception ex){
-//            logger.info("",ex);
-//        }
-//        return "Successfully logged in ..";
-//    }
-
-//    @GetMapping(path = "/dashboard")
-//    public String dashboard() {
-//        return "dashboard";
-//    }
 
 }
