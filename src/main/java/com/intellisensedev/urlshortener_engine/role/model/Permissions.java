@@ -1,18 +1,20 @@
-package com.intellisensedev.urlshortener_engine.model;
+package com.intellisensedev.urlshortener_engine.role.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "PERMISSIONS")
+public class Permissions {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private  Long id;
+
+    @Column(name = "PERMISSION_NAME")
     private String name;
-    @ManyToMany(mappedBy = "roles") // indicates the entity is the inverse of the relationship.
-    private Set<User> users;
+    @Column(name = "PERMISSION_DESCRIPTION")
+    private String description;
 
     public Long getId() {
         return id;
@@ -30,20 +32,20 @@ public class Role {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Permissions{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", users=" + users +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
