@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface URLRepository extends JpaRepository<URL, Long> {
+
+    URL findByCustomURL(String url);
 }

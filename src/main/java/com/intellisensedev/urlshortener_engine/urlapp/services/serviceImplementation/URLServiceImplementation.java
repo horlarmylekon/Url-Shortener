@@ -31,6 +31,7 @@ public class URLServiceImplementation implements URLService {
             String id = Hashing.murmur3_32().hashString(longUrl, StandardCharsets.UTF_8).toString();
 
             URL url = new URL();
+            url.setLongURL(longUrl);
             url.setCustomURL(header.concat(id));
             // To do
             //url.setDateCreated();
@@ -40,5 +41,13 @@ public class URLServiceImplementation implements URLService {
             return id;
         }
         throw new RuntimeException("Invalid Url "+ longUrl);
+    }
+
+    @Override
+    public String findTarget(String customUrl) {
+
+        URL url = urlRepository.findByCustomURL(customUrl);
+        String longVersion = url.getLongURL();
+        return longVersion;
     }
 }

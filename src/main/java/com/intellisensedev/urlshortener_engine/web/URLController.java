@@ -1,5 +1,6 @@
 package com.intellisensedev.urlshortener_engine.web;
 
+import com.intellisensedev.urlshortener_engine.urlapp.dtos.UrlDTO;
 import com.intellisensedev.urlshortener_engine.urlapp.services.URLService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,15 @@ public class URLController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/create/custom")
-    public ModelAndView createShortUrl(@RequestParam(name = "longUrl") String longUrl, ModelAndView modelAndView){
+    public ModelAndView createShortUrl(@RequestParam(name = "longUrl") String url, ModelAndView modelAndView, UrlDTO urlDTO){
 
-        String customUrl = urlService.createShortURL(longUrl);
+        String header = "http://url.io/";
+        String customUrl = urlService.createShortURL(url);
+        String longUrl = urlService.findTarget(customUrl);
 
         modelAndView.setViewName("index");
-        modelAndView.addObject("customUrl",customUrl);
+        modelAndView.addObject("longUrl", longUrl);
+        modelAndView.addObject("customUrl",header.concat(customUrl));
         return modelAndView;
 
     }

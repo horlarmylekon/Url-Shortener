@@ -63,8 +63,13 @@
             </div>
         </form>
 
-        <div class="input-group ">
-            <textarea style="width: 100%;height: 200px" name="customUrl" th:text="${customUrl}" placeholder="...shorten url will appear here"></textarea>
+        <div class="input-group align-items-center">
+            <p>
+                Transform your Url:
+                <a th:href="${longUrl}" target="_blank"><span th:text="${customUrl}"></span></a>
+            </p>
+
+            <!--<textarea style="width: 100%;height: 200px" name="customUrl" th:text="${customUrl}" placeholder="...shorten url will appear here"></textarea>-->
         </div>
 
     </main>

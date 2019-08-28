@@ -13,6 +13,10 @@ public class URL {
     private String longURL;
     @Column(name = "CUSTOM_URL")
     private String customURL;
+    @Column(name = "PASSWORD")
+    private boolean password;
+    @Column(name = "COUNT")
+    private int count;
     @Column(name = "DATE_CREATED")
     private String dateCreated;
     @Column(name = "EXPIRATION_DATE")
@@ -40,6 +44,22 @@ public class URL {
 
     public void setCustomURL(String customURL) {
         this.customURL = customURL;
+    }
+
+    public boolean isPassword() {
+        return password;
+    }
+
+    public void setPassword(boolean password) {
+        this.password = password;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getDateCreated() {
